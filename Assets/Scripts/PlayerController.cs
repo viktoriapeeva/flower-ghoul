@@ -22,20 +22,21 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        if (!anim.GetBool("isPicking")&& !EventSystem.current.IsPointerOverGameObject())
+        if (!anim.GetBool("isPicking") && !EventSystem.current.IsPointerOverGameObject())
         {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
                 Move();
             }
-            else
-            {
-                isWalking = false;
-            }
             if (Input.GetMouseButtonDown(0))
             {
                 Attack();
             }
+            else
+            {
+                isWalking = false;
+            }
+
             if (isWalking)
             {
                 anim.SetBool("isWalking", true);
@@ -57,9 +58,9 @@ public class PlayerController : MonoBehaviour
         transform.position += rightMovement; // move our transform's position right/left
         transform.position += upMovement; // Move our transform's position up/down
     }
-    
+
     void Attack()
     {
-
+        anim.SetTrigger("Attack");
     }
 }

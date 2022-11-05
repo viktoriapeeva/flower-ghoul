@@ -1727,6 +1727,7 @@ MonoBehaviour:
   dialogueText: {fileID: 624970809}
   anim: {fileID: 1079325739}
   dialogueUI: {fileID: 1079325737}
+  continueButton: {fileID: 0}
 --- !u!4 &1062683329
 Transform:
   m_ObjectHideFlags: 0
