@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
     float moveSpeed = 4f; //Change in inspector to adjust move speed
     Vector3 forward, right; // Keeps track of our relative forward and right vectors
     Animator anim;
-    bool isWalking;
+    public bool isWalking;
+    public bool isAttacking;
 
 
     void Start()
@@ -27,29 +28,26 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
                 Move();
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Attack();
+                }
+                else
+                {
+                    anim.SetBool("isWalking", false);
+
+                }
             }
             if (Input.GetMouseButtonDown(0))
             {
                 Attack();
             }
-            else
-            {
-                isWalking = false;
-            }
-
-            if (isWalking)
-            {
-                anim.SetBool("isWalking", true);
-            }
-            else
-            {
-                anim.SetBool("isWalking", false);
-            }
         }
     }
     void Move()
     {
-        isWalking = true;
+        anim.SetBool("isWalking", true);
         Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")); // setup a direction Vector based on keyboard input. GetAxis returns a value between -1.0 and 1.0. If the A key is pressed, GetAxis(HorizontalKey) will return -1.0. If D is pressed, it will return 1.0
         Vector3 rightMovement = right * moveSpeed * Time.deltaTime * Input.GetAxis("Horizontal"); // Our right movement is based on the right vector, movement speed, and our GetAxis command. We multiply by Time.deltaTime to make the movement smooth.
         Vector3 upMovement = forward * moveSpeed * Time.deltaTime * Input.GetAxis("Vertical"); // Up movement uses the forward vector, movement speed, and the vertical axis 
@@ -62,5 +60,6 @@ public class PlayerController : MonoBehaviour
     void Attack()
     {
         anim.SetTrigger("Attack");
+        Debug.Log("Attacking");
     }
 }
